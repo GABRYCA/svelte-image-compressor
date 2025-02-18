@@ -1,6 +1,6 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Svelte-Image-Compressor",
+  "short_name": "SICO",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

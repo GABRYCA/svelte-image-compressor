@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import {PRIVATE_KEY_CONVERTER} from "$env/static/private";
+import {PRIVATE_EXPIRE_TIME} from "$env/static/private";
 
 export const generateToken = () => {
     const data = `${Date.now()}`;
@@ -15,9 +16,16 @@ export const validateToken = (token) => {
         return false;
     }
 
+    let expireTime = PRIVATE_EXPIRE_TIME;
+    if (expireTime === undefined || isNaN(expireTime)) {
+        expireTime = 3600 * 1000;
+    } else {
+        expireTime *= 1000;
+    }
+
     // Check if token has expired (1 hour)
     const tokenTimestamp = parseInt(receivedData);
-    if (isNaN(tokenTimestamp) || Date.now() - tokenTimestamp > 3600000) {
+    if (isNaN(tokenTimestamp) || Date.now() - tokenTimestamp > expireTime) {
         return false;
     }
 
@@ -25,5 +33,9 @@ export const validateToken = (token) => {
     hmac.update(receivedData);
     const expectedHmac = hmac.digest('hex');
 
-    return crypto.timingSafeEqual(Buffer.from(receivedHmac, 'hex'), Buffer.from(expectedHmac, 'hex'));
+    try {
+        return crypto.timingSafeEqual(Buffer.from(receivedHmac, 'hex'), Buffer.from(expectedHmac, 'hex'));
+    } catch (e) {
+        return false;
+    }
 }

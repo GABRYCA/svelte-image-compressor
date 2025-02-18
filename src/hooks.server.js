@@ -1,5 +1,3 @@
-import {ALLOW_ORIGIN} from "$env/static/private";
-
 export const handle = async ({ resolve, event }) => {
 
     if (event.url.pathname.startsWith('/image')) {

@@ -5,6 +5,7 @@
     let token = $state(null);
     let validToken = $state(null);
 
+    // Form function to submit image to /image endpoint
     async function handleSubmit(event) {
         event.preventDefault();
 
@@ -28,27 +29,13 @@
         if (response.ok) {
             const blob = await response.blob();
             finalImage = URL.createObjectURL(blob);
-
-            // Extract filename from Content-Disposition header
-            /*const contentDisposition = response.headers.get('Content-Disposition');
-            if (contentDisposition) {
-                console.log(contentDisposition);
-                const match = contentDisposition.match(/filename="(.+)"/);
-                if (match.length === 2) {
-                    imageName = match[1];
-                }
-            }*/
         } else {
             const errorData = await response.json();
             console.error('Failed to convert image:', errorData.message);
         }
-
-        /*const content = await response.body.getReader().read();
-        finalImage = URL.createObjectURL(new Blob([new Uint8Array(content.value)], {type: 'image/webp'}));
-        console.log(finalImage);*/
     }
 
-    // Function that returns the token
+    // Function to get token from /token/generate endpoint
     async function getToken() {
         const response = await fetch('/token/generate');
         if (!response.ok) {
@@ -59,6 +46,7 @@
         return data.token;
     }
 
+    // Form function to generate token
     async function generateToken(event) {
         event.preventDefault();
 
@@ -73,6 +61,7 @@
         }
     }
 
+    // Form function to validate token
     async function validateToken(event) {
         event.preventDefault();
 
@@ -84,7 +73,7 @@
         });
 
         if (response.ok) {
-            const data = await response.json();
+            // const data = await response.json();
             validToken = true;
         } else {
             validToken = false;

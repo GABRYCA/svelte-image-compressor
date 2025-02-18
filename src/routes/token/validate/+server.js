@@ -8,7 +8,7 @@ export const POST = async ({ request }) => {
     if (!token || token === '') {
         return new Response(
             JSON.stringify({
-                message: "Invalid token"
+                message: "Missing token"
             }),
             {
                 status: 400,
@@ -38,6 +38,7 @@ export const POST = async ({ request }) => {
             message: "Valid token"
         }),
         {
+            status: 200,
             headers: {
                 'Content-Type': 'application/json'
             }
