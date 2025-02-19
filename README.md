@@ -22,6 +22,22 @@ It was made as an experimental service for a personal project.
 - Run `npm run dev` to start the server (or `npm run build` and then run it from the `build` folder).
 
 ### API:
+> [!CAUTION]
+> Usually tested with FormData objects with `formData.mode = 'no-cors'`.
+> EG:
+> ```javascript
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('token', token);
+    formData.enctype = 'multipart/form-data';
+    formData.mode = 'no-cors';
+
+    const response = await fetch(PUBLIC_CONVERTER_URL + '/image', {
+        method: 'POST',
+        body: formData,
+    });
+> ```
+
 - **POST** `/image` Generates a compressed image from a given image.
 > [!TIP]
 > Send a `FormData` object with an `image` file to compress it, and a valid `token` (From `/token/generate` perhaps, read below), `optional` fields:
