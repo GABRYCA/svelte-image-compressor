@@ -23,19 +23,18 @@ It was made as an experimental service for a personal project.
 
 ### API:
 > [!CAUTION]
-> Usually tested with FormData objects with `formData.mode = 'no-cors'`.
-> EG:
+> Usually tested using FormData objects and `formData.mode = 'no-cors'`.
 > ```javascript
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('token', token);
-    formData.enctype = 'multipart/form-data';
-    formData.mode = 'no-cors';
-
-    const response = await fetch(PUBLIC_CONVERTER_URL + '/image', {
-        method: 'POST',
-        body: formData,
-    });
+>    const formData = new FormData();
+>    formData.append('image', file);
+>    formData.append('token', token);
+>    formData.enctype = 'multipart/form-data';
+>    formData.mode = 'no-cors';
+>
+>    const response = await fetch(PUBLIC_CONVERTER_URL + '/image', {
+>        method: 'POST',
+>        body: formData,
+>    });
 > ```
 
 - **POST** `/image` Generates a compressed image from a given image.
